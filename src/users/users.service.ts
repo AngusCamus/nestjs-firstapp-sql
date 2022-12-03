@@ -33,14 +33,17 @@ export class UsersService {
     }
 
     getUsers(){
-        return this.userRepo.find()
+        return this.userRepo.find({
+            relations : ['profile']
+        })
     }
 
     async getUser(id: number){
         const userFound= await this.userRepo.findOne({
             where: {
                 id
-            }
+            },
+            relations : ['posts', 'profile']
         })
 
         if(!userFound){
